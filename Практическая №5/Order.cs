@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Практическая__5
 {
-    internal class Order
+    public class Order
     {
-        string FullOrder = "";
-        int FullCost = 0;
+        public string FullOrder = " ";
+        public int FullCost = 0;
 
-        public static int Menushka()
+        public int Menushka()
         {
             Console.Clear();
 
@@ -27,45 +27,13 @@ namespace Практическая__5
             Console.WriteLine("  Конец заказа");
             Console.WriteLine("");
             Console.WriteLine("Цена: " + FullCost);
-            Console.WriteLine("Ваш торт: ");
+            Console.WriteLine("Ваш торт: " + FullOrder);
 
-            ConsoleKeyInfo key;
-            do
-            {
-                int pos = Menu.Show(3, 9);
-
-                if (pos == 9)
-                {
-                    Console.Clear();
-
-                    Console.WriteLine("Спасибо за заказ! Если хотите сделать еще один, нажмите на клавишу Escape");
-
-                    FileCreation(FullOrder, FullCost);
-
-                    key = Console.ReadKey();
-
-                }
-
-                return pos;
-
-                key = Console.ReadKey();
-
-            } while (key.Key != ConsoleKey.Escape);
+            int pos = Menu.Show(3, 9);
+            return pos;
         }
 
-        void FileCreation(string FullOrder, int FullCost)
-        {
-            string path = "D:\\Рабочий стол\\MyFile.txt";
-
-            if (!File.Exists(path))
-            {
-                File.Create(path);
-            }
-
-            File.AppendAllText("D:\\Рабочий стол\\MyFile.txt", "Заказ от " + DateTime.Now + "\nЗаказ: " + FullOrder + "\nЦена: " + FullCost + "\n");
-        }
-
-        public static void Extra(List<Cake> list)
+        public void Extra(List<Cake> list)
         {
             ConsoleKeyInfo key;
 
@@ -93,15 +61,29 @@ namespace Практическая__5
 
                 else if (key.Key == ConsoleKey.Enter)
                 {
-                    FullOrder += list[pos].cakename + "" + list[pos].cost + "; ";
-                    FullCost += list[pos].cost;
-
-                    Menushka();
+                    FullOrder += list[pos - 3].cakename + "" + list[pos - 3].cost + "; ";
+                    FullCost += list[pos - 3].cost;
                 }
+                break;
 
             } while (key.Key != ConsoleKey.Escape);
+        }
 
-            Menushka();
+        public static void FileCreation(string FullOrder, int FullCost)
+        {
+            string path = "C:\\Новая папка (2)\\MyFile.txt";
+
+            if (File.Exists(path))
+            {
+                File.AppendAllText(path, "Заказ от " + DateTime.Now + "\nЗаказ: " + FullOrder + "\nЦена: " + FullCost + "\n");
+            }
+
+            else
+            {
+                File.Create(path);
+                Console.Clear();
+                Console.WriteLine("\nУпс!\nПохоже у вас отсутствовал путь 'C:\\Новая папка (2)\\MyFile.txt'. Из-за этого ваш заказ не сохранился. Однако сейчас путь добавился и при вашем следующем заказе данные о нём сохранятся в файл! Но перед этим вам нужно перезапустить программу (Для закрытия программы нажмите любую клавишу, кроме Escape)");
+            }
         }
     }
 }

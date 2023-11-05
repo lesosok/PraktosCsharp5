@@ -1,86 +1,103 @@
 ﻿using Практическая__5;
 
+int makaron = 1;
+ConsoleKeyInfo key;
 int pos;
+Order order = new();
 
-List<Cake> Shape = new List<Cake>();
-Cake Krug = new Cake("Круг - ", 500);
-Shape.Add(Krug);
-Cake Kvadrat = new Cake("Квадрат - ", 500);
-Shape.Add(Kvadrat);
-Cake Pryamougolnik = new Cake("Прямоугольник - ", 500);
-Shape.Add(Pryamougolnik);
+List<Cake> Shape = new()
+{
+    new Cake("Круг - ", 500),
+    new Cake("Квадрат - ", 500),
+    new Cake("Прямоугольник - ", 500)
+};
 
-List<Cake> Size = new List<Cake>();
-Cake Small = new Cake("Маленький (Диаметр - 16 см, 8 порций) - ", 1000);
-Size.Add(Small);
-Cake Default = new Cake("Обычный (Диаметр - 18 см, 10 порций) - ", 1200);
-Size.Add(Default);
-Cake Big = new Cake("Большой (Диаметр - 28 см, 24 порции) - ", 2000);
-Size.Add(Big);
+List<Cake> Size = new()
+{
+    new Cake("Маленький (Диаметр - 16 см, 8 порций) - ", 1000),
+    new Cake("Обычный (Диаметр - 18 см, 10 порций) - ", 1200),
+    new Cake("Большой (Диаметр - 28 см, 24 порции) - ", 2000)
+};
 
-List<Cake> Flavour = new List<Cake>();
-Cake Vanila = new Cake("Ванильный - ", 100);
-Flavour.Add(Vanila);
-Cake Caramel = new Cake("Карамельный - ", 150);
-Flavour.Add(Caramel);
-Cake Coco = new Cake("Кокосовый - ", 250);
-Flavour.Add(Coco);
+List<Cake> Flavour = new()
+{
+    new Cake("Ванильный - ", 100),
+    new Cake("Карамельный - ", 150),
+    new Cake("Кокосовый - ", 250)
+};
 
-List<Cake> Korzhi = new List<Cake>();
-Cake korzh1 = new Cake("1 корж - ", 200);
-Korzhi.Add(korzh1);
-Cake korzha2 = new Cake("2 коржа - ", 400);
-Korzhi.Add(korzha2);
-Cake korzha3 = new Cake("3 коржа - ", 600);
-Korzhi.Add(korzha3);
+List<Cake> Korzhi = new()
+{
+    new Cake("1 корж - ", 200),
+    new Cake("2 коржа - ", 400),
+    new Cake("3 коржа - ", 600)
+};
 
-List<Cake> Glazur = new List<Cake>();
-Cake Cream = new Cake("Крем - ", 100);
-Glazur.Add(Cream);
-Cake Drazhe = new Cake("Драже - ", 150);
-Glazur.Add(Drazhe);
-Cake Berries = new Cake("Ягоды - ", 200);
-Glazur.Add(Berries);
+List<Cake> Glazur = new()
+{
+    new Cake("Крем - ", 100),
+    new Cake("Драже - ", 150),
+    new Cake("Ягоды - ", 200)
+};
 
-List<Cake> Decor = new List<Cake>();
-Cake Chocolate = new Cake("Шоколадная - ", 150);
-Decor.Add(Chocolate);
-Cake Berry = new Cake("Ягодная - ", 150);
-Decor.Add(Berry);
-Cake Creamy = new Cake("Кремовая - ", 150);
-Decor.Add(Creamy);
+List<Cake> Decor = new()
+{
+    new Cake("Шоколадная - ", 150),
+    new Cake("Ягодная - ", 150),
+    new Cake("Кремовая - ", 150)
+};
 
 do
 {
-    pos = Order.Menushka();
-    if (pos == 3)
-    {
-        Order.Extra(Shape);
-    }
+    pos = order.Menushka();
 
-    else if (pos == 4)
+    switch (pos)
     {
-        Order.Extra(Size);
-    }
+        case 3:
+            order.Extra(Shape);
+            break;
 
-    else if (pos == 5)
-    {
-        Order.Extra(Flavour);
-    }
+        case 4:
+            order.Extra(Size); 
+            break;
 
-    else if (pos == 6)
-    {
-        Order.Extra(Korzhi);
-    }
-    
-    else if (pos == 7)
-    {
-        Order.Extra(Glazur);
-    }
+        case 5:
+            order.Extra(Flavour);
+            break;
 
-    else if (pos == 8)
-    {
-        Order.Extra(Decor);
-    }
+        case 6:
+            order.Extra(Korzhi);
+            break;
 
-} while (true);
+        case 7:
+            order.Extra(Glazur);
+            break;
+
+        case 8:
+            order.Extra(Decor);
+            break;
+
+        case 9:
+            Console.Clear();
+
+            Console.WriteLine("Спасибо за заказ! Если хотите сделать еще один, нажмите на клавишу Escape");
+
+            Order.FileCreation(order.FullOrder, order.FullCost);
+
+            key = Console.ReadKey();
+
+            if (key.Key == ConsoleKey.Escape)
+            {
+                order.FullOrder = " ";
+                order.FullCost = 0;
+                order.Menushka();
+            }
+
+            else
+            {
+                makaron = 0;
+            }
+
+            break;
+    }
+} while (makaron != 0);

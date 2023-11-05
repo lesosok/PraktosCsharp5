@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Практическая__5
 {
-    internal class Menu
+    public class Menu
     {
         public static int Show(int minStrelochka, int maxStrelochka)
         {

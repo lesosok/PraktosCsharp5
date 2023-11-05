@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Практическая__5
 {
-    internal class Cake
+    public class Cake
     {
         public string cakename;
         public int cost;
